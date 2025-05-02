@@ -17,6 +17,7 @@ export const useTask = (userId: string) => {
 
   useEffect(() => {
     if (data) {
+      console.log("data", data);
       setTasks(data);
     }
   }, [data, setTasks]);
