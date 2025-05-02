@@ -109,7 +109,7 @@ export default function HomePage() {
                   </li>
                 ))}
 
-              {renderTasks.map((task) => (
+              {renderTasks?.map((task) => (
                 <li key={task.id}>
                   <Cardtask
                     task={task}
