@@ -10,14 +10,10 @@ export interface Task {
   id: number;
   title: string;
   completed: boolean;
-  userId: string;
   dueDate?: Date | null;
   priority: TaskPriority;
-  parentId?: number | null;
-  description?: string | null;
+  description: string;
 }
-
-export type TaskCreate = Omit<Task, "id">;
 
 interface TaskState {
   tasks: Task[];
@@ -39,7 +35,7 @@ export const useTaskStore = create<TaskState>((set) => ({
       ),
     })),
 
-  addTask: (task) => set((state) => ({ tasks: [...state.tasks, task] })),
+  addTask: (task) => set((state) => ({ tasks: [task, ...state.tasks] })),
   removeTask: (taskId) =>
     set((state) => ({
       tasks: state.tasks.filter((task) => task.id !== taskId),

@@ -1,23 +1,21 @@
 import { TaskService } from "@/service/task-service";
-import { TaskCreate, useTaskStore } from "@/store/task.store";
+import { useTaskStore } from "@/store/task.store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
-export const useTask = (userId: string) => {
+export const useTask = () => {
   const queryClient = useQueryClient();
-  const { tasks, setTasks, addTask, removeTask, updateTask, clearTasks } =
-    useTaskStore();
+  const { tasks, setTasks } = useTaskStore();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["tasks"],
-    queryFn: () => TaskService.getAllTask(userId),
+    queryFn: () => TaskService.getAllTask(),
   });
 
   useEffect(() => {
     if (data) {
-      console.log("data", data);
       setTasks(data);
     }
   }, [data, setTasks]);
@@ -33,20 +31,11 @@ export const useTask = (userId: string) => {
     if (e instanceof AxiosError) {
       msj = e.response?.data.error || msj;
     }
-
-    setTasks(data);
-
     toast.error(msj);
   }
 
   const { mutate: mutateAddTask } = useMutation({
     mutationFn: TaskService.createTask,
-    onMutate: (newTask: TaskCreate) => {
-      addTask({
-        ...newTask,
-        id: Date.now() - 1,
-      });
-    },
 
     onSuccess: () => onSuccess("Tarea creada correctamente"),
     onError: (e) => onError(e, "Error al crear la tarea"),
@@ -55,9 +44,6 @@ export const useTask = (userId: string) => {
 
   const { mutate: mutateRemoveTask } = useMutation({
     mutationFn: TaskService.deleteTask,
-    onMutate: (taskId: number) => {
-      removeTask(taskId);
-    },
     onSuccess: () => onSuccess("Tarea eliminada correctamente"),
     onError: (e) => onError(e, "Error al eliminar la tarea"),
     onSettled: onSettled,
@@ -65,9 +51,6 @@ export const useTask = (userId: string) => {
 
   const { mutate: mutateUpdateTask } = useMutation({
     mutationFn: TaskService.updateTask,
-    onMutate: ({ taskId, task }) => {
-      updateTask(taskId, task);
-    },
     onSuccess: () => onSuccess("Tarea actualizada correctamente"),
     onError: (e) => onError(e, "Error al actualizar la tarea"),
     onSettled: onSettled,
@@ -80,6 +63,5 @@ export const useTask = (userId: string) => {
     addTask: mutateAddTask,
     removeTask: mutateRemoveTask,
     updateTask: mutateUpdateTask,
-    clearTasks,
   };
 };

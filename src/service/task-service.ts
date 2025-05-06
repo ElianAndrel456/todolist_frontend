@@ -1,11 +1,11 @@
 import { http } from "@/lib/http";
-import { TaskCreate } from "@/store/task.store";
+import { TaskCreate } from "@/schema/create-task-schema";
 
 const TASK_API_URL = "api/v1/tasks";
 
 export class TaskService {
-  static async getAllTask(userId: string) {
-    const response = await http.get(`${TASK_API_URL}?userId=${userId}`);
+  static async getAllTask() {
+    const response = await http.get(`${TASK_API_URL}`);
     return response.data;
   }
 

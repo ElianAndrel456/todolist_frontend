@@ -8,5 +8,7 @@ export const createTaskSchema = z.object({
   priority: z.nativeEnum(TaskPriority, {
     required_error: "La prioridad es requerida",
   }),
-  dueDate: z.date().nullable(),
+  dueDate: z.date().optional().nullable(),
 });
+
+export type TaskCreate = z.infer<typeof createTaskSchema>;
