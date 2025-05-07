@@ -34,7 +34,7 @@ export function HomePage() {
   return (
     <main className="px-8">
       <Header tasks={tasks} />
-      <section className="grid grid-cols-8 max-w-7xl mx-auto gap-8 ">
+      <section className="grid md:grid-cols-8 max-w-7xl mx-auto gap-8 grid-cols-4">
         <section className="mt-8 space-y-8 col-span-3">
           <Typografy variant="h1">
             <TextEffect per="char" preset="fade-in-blur">

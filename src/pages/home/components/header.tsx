@@ -43,7 +43,17 @@ export function Header({ tasks }: { tasks: Task[] | null }) {
           width={80}
           height={80}
         />
-        <Typografy variant="small">TaskListXpert</Typografy>
+        <Typografy variant="small" className="flex gap-0.5 items-end">
+          <span className="inline-flex animate-text-gradient bg-gradient-to-r from-[#c5f0c9] via-[#86f19a] to-[#d4fddc] bg-[200%_auto] bg-clip-text text-xl text-transparent">
+            TaskList
+          </span>
+          <span>
+            <span className="text-muted-foreground text-[10px]">
+              by ElianDev{" "}
+            </span>
+            <span className="text-muted-foreground"></span>
+          </span>
+        </Typografy>
       </div>
       <div className="flex items-center space-x-4">
         {tasks && (
